@@ -1,0 +1,197 @@
+Copy paste this code in phpMyAdmin before running the Bank.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+
+CREATE DATABASE IF NOT EXISTS mtau_bank;
+USE mtau_bank;
+
+SET FOREIGN_KEY_CHECKS = 0;
+DROP TABLE IF EXISTS system_logs;
+DROP TABLE IF EXISTS insurance_policies;
+DROP TABLE IF EXISTS mutual_funds;
+DROP TABLE IF EXISTS bill_payments;
+DROP TABLE IF EXISTS loans;
+DROP TABLE IF EXISTS transactions;
+DROP TABLE IF EXISTS users;
+SET FOREIGN_KEY_CHECKS = 1;
+
+-- 1. Users Master Profile Registry Table
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    roll_no VARCHAR(20) UNIQUE NOT NULL,
+    account_class ENUM('Student', 'Business', 'Standard') NOT NULL,
+    account_type ENUM('Current', 'Saving') NOT NULL,
+    full_name VARCHAR(100) NOT NULL,
+    age INT NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    phone VARCHAR(20) NOT NULL,
+    cnic VARCHAR(15) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    account_no VARCHAR(20) UNIQUE NOT NULL,
+    balance DECIMAL(15, 2) DEFAULT 25000.00,
+    loyalty_points INT DEFAULT 100,
+    card_status ENUM('not_applied', 'issued') DEFAULT 'not_applied',
+    card_tier VARCHAR(30) DEFAULT 'none',
+    card_pin VARCHAR(4) DEFAULT NULL,
+    card_blocked TINYINT(1) DEFAULT 0,
+    local_usage TINYINT(1) DEFAULT 1,
+    intl_usage TINYINT(1) DEFAULT 0,
+    card_limit DECIMAL(15,2) DEFAULT 50000.00,
+    role ENUM('user', 'admin') DEFAULT 'user',
+    status ENUM('active', 'frozen') DEFAULT 'active',
+    last_login_date DATE DEFAULT NULL,
+    last_maintenance_claim VARCHAR(7) DEFAULT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 2. General Ledger Transaction Postings Table
+CREATE TABLE transactions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    account_no VARCHAR(20) NOT NULL,
+    type ENUM('deposit', 'withdrawal', 'transfer') NOT NULL,
+    amount DECIMAL(15, 2) NOT NULL,
+    recipient_account VARCHAR(20) NULL,
+    description VARCHAR(255) NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (account_no) REFERENCES users(account_no) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 3. Dedicated Capital Credit & Loan Registry Table
+CREATE TABLE loans (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    loan_type VARCHAR(100) NOT NULL,
+    amount DECIMAL(15, 2) NOT NULL,
+    months INT NOT NULL,
+    emi DECIMAL(10, 2) NOT NULL,
+    status ENUM('pending', 'approved', 'rejected') DEFAULT 'pending',
+    applied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 4. Advanced Digital Ecosystem Bill Payments Table
+CREATE TABLE bill_payments (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    super_category VARCHAR(50) NOT NULL,
+    biller_name VARCHAR(100) NOT NULL, 
+    consumer_number VARCHAR(50) NOT NULL,
+    amount DECIMAL(15, 2) NOT NULL,
+    points_earned INT DEFAULT 0,
+    paid_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 5. Mutual Capital Growth Pools Table
+CREATE TABLE mutual_funds (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    fund_name VARCHAR(100) NOT NULL, 
+    amount_invested DECIMAL(15, 2) NOT NULL,
+    expected_yield_rate DECIMAL(5, 2) NOT NULL, 
+    invested_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 6. Multi-Tier Risk Insurance Framework Table
+CREATE TABLE insurance_policies (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    policy_type VARCHAR(55) NOT NULL,
+    coverage_amount DECIMAL(15, 2) NOT NULL,
+    monthly_premium DECIMAL(10, 2) NOT NULL,
+    status VARCHAR(20) DEFAULT 'Active',
+    enrolled_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 7. Automated Security Audit Trail Logs Table
+CREATE TABLE system_logs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    activity_type VARCHAR(50) NOT NULL,
+    description VARCHAR(255) NOT NULL,
+    logged_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Inject Custom Administrator Account Credentials Identity Mapping Rows
+INSERT INTO users (roll_no, account_class, account_type, full_name, age, email, phone, cnic, password, account_no, loyalty_points, role) 
+VALUES ('ADMIN-MTAU', 'Standard', 'Current', 'MTAU Central Admin Override', 22, 'mtaubank@gmail.com', '03141381512', '42401-2985694-5', '$2y$10$tZbeH77p.S4xS6Z6A7S00uxK9nE0u8F1LzFfVOf2X8Y4bVzC1lX.i', '0000000000', 9999, 'admin');
+
+-- 8. Helpdesk Customer Support Tickets Table
+CREATE TABLE IF NOT EXISTS support_tickets (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    subject VARCHAR(150) NOT NULL,
+    message TEXT NOT NULL,
+    status ENUM('open', 'resolved') DEFAULT 'open',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 9. Beneficiary Contact Book Directory Table
+CREATE TABLE IF NOT EXISTS beneficiaries (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    nickname VARCHAR(100) NOT NULL,
+    account_no VARCHAR(20) NOT NULL,
+    bank_name VARCHAR(100) DEFAULT 'MTAU Bank',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 10. Core General Settings Directory Table
+CREATE TABLE IF NOT EXISTS system_settings (
+    name VARCHAR(50) PRIMARY KEY,
+    value VARCHAR(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Populate system parameter variables
+INSERT IGNORE INTO system_settings (name, value) VALUES 
+('loan_markup_rate', '0.12'),
+('maintenance_mode', '0');
+
+-- 11. Forex & Crypto Demo Trading Accounts Table
+CREATE TABLE IF NOT EXISTS trading_accounts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    asset_class ENUM('forex', 'crypto') NOT NULL,
+    balance DECIMAL(15, 2) DEFAULT 10000.00,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY user_asset (user_id, asset_class),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 12. Forex & Crypto Trade Positions Tracker Table
+CREATE TABLE IF NOT EXISTS trading_positions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    account_id INT NOT NULL,
+    asset_symbol VARCHAR(20) NOT NULL,
+    type ENUM('buy', 'sell') NOT NULL,
+    entry_price DECIMAL(18, 6) NOT NULL,
+    size DECIMAL(18, 6) NOT NULL,
+    status ENUM('open', 'closed') DEFAULT 'open',
+    profit_loss DECIMAL(15, 2) DEFAULT 0.00,
+    close_price DECIMAL(18, 6) DEFAULT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    closed_at TIMESTAMP NULL DEFAULT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (account_id) REFERENCES trading_accounts(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 13. Auto loyalty trigger for transactions >= 1000 PKR
+DELIMITER //
+CREATE TRIGGER after_transaction_insert
+AFTER INSERT ON transactions
+FOR EACH ROW
+BEGIN
+    IF NEW.amount >= 1000.00 THEN
+        UPDATE users 
+        SET loyalty_points = loyalty_points + 5 
+        WHERE account_no = NEW.account_no;
+    END IF;
+END //
+DELIMITER ;

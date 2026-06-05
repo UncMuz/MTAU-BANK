@@ -1,0 +1,584 @@
+/* MTAU Bank - Consolidated Design System & Theme Stylesheet */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;800&display=swap');
+
+:root {
+    --bg-dark-1: #12071c;
+    --bg-dark-2: #0d0414;
+    --bg-purple-deep: #261338;
+    --accent-mauve: #e0b0ff;
+    --accent-purple-light: #a855f7;
+    --accent-purple-dark: #6b21a8;
+    --glass-bg: rgba(59, 34, 76, 0.22);
+    --glass-border: rgba(224, 176, 255, 0.12);
+    --btn-grad: linear-gradient(135deg, #a855f7, #e0b0ff);
+    --btn-grad-hover: linear-gradient(135deg, #9333ea, #c084fc);
+    --text-white: #ffffff;
+    --text-muted: #b5a9c0;
+}
+
+body {
+    background: linear-gradient(135deg, var(--bg-dark-1) 0%, var(--bg-purple-deep) 50%, var(--bg-dark-2) 100%);
+    color: var(--text-white);
+    font-family: 'Outfit', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Watermark Background */
+.bank-watermark {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 85%;
+    max-width: 950px;
+    height: 750px;
+    opacity: 0.015;
+    pointer-events: none;
+    z-index: -1;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 80' fill='none' stroke='%23e0b0ff' stroke-width='0.6'><path d='M5 22h90M10 22v45M25 22v45M40 22v45M60 22v45M75 22v45M90 22v45M2 22l48-18 48 18M2 67h96M0 72h100M0 77h100M43 38h14v16H43z'/></svg>");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+/* Navbar */
+.navbar {
+    background: rgba(18, 7, 28, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.navbar-brand {
+    font-weight: 800;
+    color: var(--accent-mauve) !important;
+}
+
+/* Premium Anti-Gravity Glassmorphism Cards */
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.anti-gravity:hover {
+    transform: translateY(-5px);
+    border-color: rgba(224, 176, 255, 0.28);
+    box-shadow: 0 20px 40px rgba(168, 85, 247, 0.15);
+    background: rgba(59, 34, 76, 0.28);
+}
+
+/* Form inputs & Select dropdowns */
+.form-control, .form-select {
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(224, 176, 255, 0.2);
+    color: var(--text-white);
+    border-radius: 12px;
+    padding: 11px 15px;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus, .form-select:focus {
+    background: rgba(0, 0, 0, 0.5);
+    border-color: var(--accent-mauve);
+    color: var(--text-white);
+    box-shadow: 0 0 12px rgba(224, 176, 255, 0.15);
+    outline: none;
+}
+
+/* Buttons */
+.btn-gradient {
+    background: var(--btn-grad);
+    border: none;
+    color: #12071c;
+    font-weight: 700;
+    border-radius: 12px;
+    padding: 10px 20px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-gradient:hover {
+    background: var(--btn-grad-hover);
+    box-shadow: 0 4px 15px rgba(224, 176, 255, 0.3);
+    transform: translateY(-2px);
+    color: #12071c;
+}
+
+.btn-gradient:disabled {
+    background: rgba(224, 176, 255, 0.2);
+    color: rgba(255, 255, 255, 0.4);
+    transform: none;
+    box-shadow: none;
+}
+
+/* Page-specific button additions */
+.btn-buy {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    font-weight: bold;
+    border-radius: 10px;
+    border: none;
+    transition: all 0.2s;
+}
+
+.btn-buy:hover {
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+    transform: translateY(-1px);
+}
+
+.btn-sell {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+    font-weight: bold;
+    border-radius: 10px;
+    border: none;
+    transition: all 0.2s;
+}
+
+.btn-sell:hover {
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.35);
+    transform: translateY(-1px);
+}
+
+/* Text Accent Highlights */
+.text-glow {
+    color: var(--accent-mauve);
+    font-weight: 600;
+}
+
+.text-gold {
+    color: #ffc107 !important;
+    font-weight: 700;
+}
+
+.text-muted-custom {
+    color: var(--text-muted);
+}
+
+/* Physical Credit Card rendering */
+.card-render {
+    background: linear-gradient(135deg, #e0b0ff, #6b21a8);
+    border-radius: 20px;
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.2), 0 12px 30px rgba(0, 0, 0, 0.5);
+}
+
+.eye-toggle-btn {
+    background: none;
+    border: none;
+    color: var(--accent-mauve);
+    font-size: 18px;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 8px;
+    transition: transform 0.2s;
+}
+
+.eye-toggle-btn:hover {
+    transform: scale(1.2);
+}
+
+.qr-interactive {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.qr-interactive:hover {
+    transform: scale(1.03);
+    filter: brightness(1.1);
+}
+
+.hover-float {
+    transition: all 0.3s ease;
+}
+
+.hover-float:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(224, 176, 255, 0.2);
+    border-color: rgba(224, 176, 255, 0.3);
+}
+
+/* Tables styling */
+.table-custom {
+    background: rgba(0, 0, 0, 0.2) !important;
+    font-size: 13.5px;
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.table-custom th {
+    background: rgba(107, 33, 168, 0.2) !important;
+    color: var(--accent-mauve) !important;
+    border-bottom: 1px solid var(--glass-border) !important;
+    font-weight: 600;
+    padding: 12px;
+}
+
+.table-custom td {
+    color: #ded6e3;
+    border-bottom: 1px solid rgba(224, 176, 255, 0.05);
+    padding: 12px;
+}
+
+/* Tabs customization */
+.nav-tabs-custom {
+    border-bottom: 2px solid rgba(224, 176, 255, 0.1);
+}
+
+.nav-tabs-custom .nav-link {
+    color: var(--text-muted);
+    border: none;
+    background: transparent;
+    font-weight: 600;
+    font-size: 14.5px;
+    padding: 12px 20px;
+    transition: all 0.3s ease;
+}
+
+.nav-tabs-custom .nav-link.active {
+    color: var(--accent-mauve);
+    border-bottom: 3px solid var(--accent-mauve);
+    background: transparent;
+}
+
+/* Badge highlights */
+.market-badge {
+    font-size: 11px;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.lucide-icon {
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+.inline-icon {
+    width: 16px;
+    height: 16px;
+    vertical-align: -0.125em;
+    margin-right: 4px;
+    display: inline-block;
+}
+
+.status-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+.status-dot.active {
+    background-color: #10b981;
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+}
+.status-dot.maintenance {
+    background-color: #ef4444;
+    box-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
+}
+
+/* Chatbot Floating Widget Styles */
+.chatbot-trigger {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--btn-grad);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    z-index: 9999;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.chatbot-trigger:hover {
+    transform: scale(1.1) rotate(10deg);
+    box-shadow: 0 8px 25px rgba(168, 85, 247, 0.4);
+}
+
+.chatbot-trigger svg {
+    width: 28px;
+    height: 28px;
+    color: #12071c;
+}
+
+.chatbot-box {
+    position: fixed;
+    bottom: 95px;
+    right: 25px;
+    width: 380px;
+    height: 520px;
+    border-radius: 20px;
+    background: rgba(22, 11, 35, 0.94);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+    display: flex;
+    flex-direction: column;
+    z-index: 9998;
+    overflow: hidden;
+    transform: scale(0);
+    transform-origin: bottom right;
+    transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.chatbot-box.open {
+    transform: scale(1);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.chatbot-header {
+    background: linear-gradient(135deg, var(--bg-dark-1), var(--bg-purple-deep));
+    border-bottom: 1px solid var(--glass-border);
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chatbot-header-title {
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--accent-mauve);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.chatbot-header-actions {
+    display: flex;
+    gap: 12px;
+    color: var(--text-muted);
+}
+
+.chatbot-header-actions i {
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.chatbot-header-actions i:hover {
+    color: var(--text-white);
+}
+
+.chatbot-messages {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.chatbot-messages::-webkit-scrollbar {
+    width: 5px;
+}
+
+.chatbot-messages::-webkit-scrollbar-thumb {
+    background: rgba(224, 176, 255, 0.1);
+    border-radius: 10px;
+}
+
+.chatbot-msg {
+    max-width: 80%;
+    padding: 10px 14px;
+    border-radius: 15px;
+    font-size: 13.5px;
+    line-height: 1.45;
+}
+
+.chatbot-msg.bot {
+    align-self: flex-start;
+    background: rgba(59, 34, 76, 0.4);
+    border: 1px solid rgba(224, 176, 255, 0.1);
+    color: #e5def0;
+    border-top-left-radius: 2px;
+}
+
+.chatbot-msg.user {
+    align-self: flex-end;
+    background: rgba(168, 85, 247, 0.25);
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    color: var(--text-white);
+    border-top-right-radius: 2px;
+}
+
+.chatbot-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 5px;
+}
+
+.chatbot-opt-btn {
+    background: rgba(224, 176, 255, 0.08);
+    border: 1px solid rgba(224, 176, 255, 0.2);
+    color: var(--accent-mauve);
+    font-size: 12px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+
+.chatbot-opt-btn:hover {
+    background: rgba(224, 176, 255, 0.18);
+    border-color: var(--accent-mauve);
+    transform: translateY(-1px);
+}
+
+.chatbot-input-area {
+    padding: 15px;
+    border-top: 1px solid var(--glass-border);
+    display: flex;
+    gap: 10px;
+    background: rgba(18, 7, 28, 0.4);
+}
+
+.chatbot-input-area input {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(224, 176, 255, 0.15);
+    border-radius: 12px;
+    color: var(--text-white);
+    padding: 10px 14px;
+    font-size: 13.5px;
+}
+
+.chatbot-input-area input:focus {
+    outline: none;
+    border-color: var(--accent-mauve);
+}
+
+.chatbot-send-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: var(--btn-grad);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.chatbot-send-btn:hover {
+    background: var(--btn-grad-hover);
+    transform: scale(1.05);
+}
+
+.chatbot-send-btn svg {
+    width: 18px;
+    height: 18px;
+    color: #12071c;
+}
+
+/* Page Specific additions: Transfer Terminal */
+.tab-btn {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(224, 176, 255, 0.2);
+    color: #c4b9d0;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.tab-btn.active, .tab-btn:hover {
+    background: #e0b0ff;
+    color: #12071c;
+    border-color: #e0b0ff;
+    box-shadow: 0 4px 12px rgba(224, 176, 255, 0.3);
+}
+
+.clickable-beneficiary {
+    cursor: pointer;
+    transition: 0.2s;
+    border-bottom: 1px solid rgba(224, 176, 255, 0.1);
+}
+.clickable-beneficiary:hover {
+    background: rgba(224, 176, 255, 0.1);
+}
+
+/* Page Specific additions: Bill Terminal */
+.portal-link-box { 
+    background: rgba(0, 0, 0, 0.4); 
+    border: 1px dashed rgba(224, 176, 255, 0.3); 
+    border-radius: 12px; padding: 15px; font-size: 14px; 
+}
+
+/* Page Specific additions: Loan Terminal */
+.progress-bar-custom {
+    height: 12px;
+    background-color: rgba(224, 176, 255, 0.1);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+/* Page Specific additions: Card Manager */
+.form-check-input {
+    background-color: rgba(0,0,0,0.4);
+    border-color: rgba(224, 176, 255, 0.3);
+}
+.form-check-input:checked {
+    background-color: #a855f7;
+}
+
+/* Page Specific additions: Loyalty Perks */
+.btn-warning-custom {
+    background: linear-gradient(135deg, #ffc107, #f59e0b);
+    border: none;
+    color: #12071c;
+    font-weight: 800;
+    border-radius: 12px;
+    padding: 10px 20px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.btn-warning-custom:hover {
+    box-shadow: 0 4px 15px rgba(255, 193, 7, 0.35);
+    transform: translateY(-2px);
+    color: #12071c;
+}
+
+/* Page Specific additions: Admin Console */
+.btn-outline-glow {
+    background: transparent;
+    border: 1px solid var(--accent-mauve);
+    color: var(--accent-mauve);
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+.btn-outline-glow:hover {
+    background: var(--accent-mauve);
+    color: #12071c;
+}
